@@ -25,18 +25,27 @@ type TableProps = {
     onTableChange,
     showPagination = true,
   }: TableProps) => {
-  console.log("from table",columns,dataSource);
-  
-  return (
-    <div>
-         <Table
-      loading={loading}
-      columns={columns}
-      dataSource={dataSource}
-    //   pagination={paginationConfig}
-    //   onChange={onTableChange}
-    />
-    </div>
-  )
+    const paginationConfig = showPagination
+      ? {
+          pageSize: pageSize,
+          total: totalPages,
+          pageSizeOptions: [5, 10, 20],
+          showSizeChanger: showSizeChanger,
+          onChange: onPaginationChange,
+        }
+      : false;
+    console.log(paginationConfig);
+
+    return (
+      <div>
+        <Table
+          loading={loading}
+          columns={columns}
+          dataSource={dataSource}
+          pagination={paginationConfig}
+          //   onChange={onTableChange}
+        />
+      </div>
+    );
 }
 export default TableUi
