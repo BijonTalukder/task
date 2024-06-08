@@ -8,7 +8,7 @@ import {
 } from "@/redux/API/baseApi";
 import dayjs from "dayjs";
 import Link from "next/link";
-import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import { DeleteOutlined, EditOutlined, EyeFilled } from "@ant-design/icons";
 const ProductPage = () => {
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(10);
@@ -34,6 +34,9 @@ const ProductPage = () => {
       message.error(error?.message);
     }
   };
+  const handleView = async(id:any)=>{
+
+  }
   const columns = [
     {
       title: "Name",
@@ -63,7 +66,7 @@ const ProductPage = () => {
       render: function (data: any) {
         return (
           <>
-            <Link href={"/"}>
+            <Link href={`/product/edit/${data.id}`}>
               <Button
                 style={{
                   margin: "0px 5px",
@@ -81,6 +84,18 @@ const ProductPage = () => {
             >
               <DeleteOutlined />
             </Button>
+            <Link   style={{
+                  margin: "0px 5px",
+                }} href={`/product/view/${data.id}`}>
+            <Button
+              onClick={() => handleView(data?.id)}
+              type='primary'
+              danger
+            >
+              <EyeFilled />
+            </Button>
+            </Link>
+           
           </>
         );
       },
@@ -93,7 +108,7 @@ const ProductPage = () => {
     setSize(pageSize);
   };
   const product = data?.data?.data;
-  console.log(data.data.total);
+  // console.log(data.data.total);
   return (
     <div>
       <div>
@@ -114,7 +129,7 @@ const ProductPage = () => {
         columns={columns}
         dataSource={product}
         pageSize={size}
-        totalPages={data.data.total}
+        totalPages={data?.data?.total}
         showSizeChanger={true}
         onPaginationChange={onPaginationChange}
         showPagination={true}
