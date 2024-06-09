@@ -5,8 +5,10 @@ import { Button, Input, message } from "antd";
 import React, { useState } from "react";
 
 const CreateProduct = () => {
-  const [setProductData] = useCreateProductMutation();
-  const [variants, setVariants] = useState([{ color: "", specification: "", size: "" }]);
+  const [createProduct, { isLoading, error }] = useCreateProductMutation();
+  const [variants, setVariants] = useState([
+    { color: "", specification: "", size: "" },
+  ]);
 
   const handleProduct = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -15,7 +17,7 @@ const CreateProduct = () => {
       brand: e.currentTarget.brand.value,
       type: e.currentTarget.type.value,
       origin: e.currentTarget.origin.value,
-      variants
+      variants,
     };
     // const data1=  {
     //   name: "Product A",
@@ -40,14 +42,14 @@ const CreateProduct = () => {
     //     }
     //   ]
     // }
-    
-// console.log(data1,"check");
+
+    // console.log(data1,"check");
 
     try {
-      const res = await setProductData(data);
+      const res =await createProduct(data ).unwrap();
       if (res) {
-        console.log(res,"check");
-        
+        console.log(res, "check");
+
         message.success("Product created successfully");
       }
     } catch (error: any) {
@@ -57,7 +59,7 @@ const CreateProduct = () => {
   };
 
   const handleVariantChange = (index: number, field: string, value: string) => {
-    setVariants((prevVariants) => 
+    setVariants((prevVariants) =>
       prevVariants.map((variant, i) =>
         i === index ? { ...variant, [field]: value } : variant
       )

@@ -2,7 +2,6 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 import axios, { AxiosError } from "axios";
 import type { BaseQueryFn } from "@reduxjs/toolkit/query";
 
-
 export const axiosBaseQuery: BaseQueryFn<
   {
     url: string;
@@ -48,10 +47,10 @@ export const baseApi = createApi({
       }),
     }),
     createProduct: builder.mutation({
-      query: ({ data }) => ({
+      query: (product) => ({
         url: "https://reactjr.coderslab.online/api/products",
         method: "POST",
-        data,
+        data: product,
       }),
     }),
     deleteProduct: builder.mutation({
@@ -74,10 +73,10 @@ export const baseApi = createApi({
       }),
     }),
     createOrder: builder.mutation({
-      query: ({ data }) => ({
+      query: (order) => ({
         url: "https://reactjr.coderslab.online/api/orders",
         method: "POST",
-        data,
+        data: order,
       }),
     }),
     getOrder: builder.query({
